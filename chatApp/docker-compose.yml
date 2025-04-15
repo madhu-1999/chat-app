@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: pg-chat-app
+    image: postgres:14.0
+    platform: linux/arm64
+    hostname: localhost
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: chat_app
+    networks:
+      - chat-app
+    volumes:
+      - type: bind
+        source: ./db-data 
+        target: /var/lib/postgresql/data 
+networks:
+  chat-app:
+    driver: bridge
+volumes:
+  postgres-data:
